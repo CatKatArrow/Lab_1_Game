@@ -1578,8 +1578,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 6651309449951504555}
   cam: {fileID: 963194228}
-  movementSpeed: 20
-  runSpeed: 1000
+  movementSpeed: 10
+  walkSpeed: 20
+  runSpeed: 40
   jumpHeight: 10
   gravity: -50
   groundCheck: {fileID: 563532089}
@@ -1588,6 +1589,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   turnSmoothTime: 0.1
+  isGrounded: 0
+  Sprinting: 0
 --- !u!143 &6651309449951504555
 CharacterController:
   m_ObjectHideFlags: 0

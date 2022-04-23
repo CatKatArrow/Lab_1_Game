@@ -8,6 +8,7 @@ public class CharacterMovement : MonoBehaviour
     public Transform cam;
 
     public float movementSpeed = 10f;
+    public float walkSpeed = 20f;
     public float runSpeed = 40f;
     public float jumpHeight = 10f;
     public float gravity = -9.81f;
@@ -21,11 +22,17 @@ public class CharacterMovement : MonoBehaviour
     
     Vector3 velocity;
 
-    bool isGrounded;
+    public bool isGrounded;
+    // isGround everthing that is on the Ground Layer can work.
+    public bool Sprinting;
 
-  
+    void Start()
+    {
+
+    }
     void Update()
     {
+
         //This help so the game know when that character is on the ground.
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -46,6 +53,41 @@ public class CharacterMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
+        
+        //Turn on and off Sprinting.
+        if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
+        {
+            Sprinting = true;
+        }
+        else
+        {
+            Sprinting = false;
+        }
+
+        if (Sprinting == true)
+        {
+            movementSpeed = runSpeed;
+        }
+
+        if (Sprinting == false)
+        {
+            movementSpeed = walkSpeed;
+        }
+        
+        /*
+        // Turn on Sprinting.
+        if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
+        {
+            Sprinting = true;
+            //Debug.Log("Run");
+        }
+
+        // Turn off Sprinting.
+        if (Input.GetKeyUp(KeyCode.LeftShift) && isGrounded)
+        {
+            Sprinting = false;
+        }
+        */
 
         if (direction.magnitude >= 0.1f)
         {
