@@ -24,11 +24,12 @@ public class CharacterMovement : MonoBehaviour
 
     public bool isGrounded;
     // isGround everthing that is on the Ground Layer can work.
-    public bool Sprinting;
+
+    Animator anim;
 
     void Start()
     {
-
+        anim = GetComponent<Animator>();
     }
     void Update()
     {
@@ -46,30 +47,22 @@ public class CharacterMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+               
 
         //Character Jump
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            anim.SetTrigger("Jump");  //SetTrigger is a one off.
         }
 
         
         //Turn on and off Sprinting.
-        if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
-        {
-            Sprinting = true;
-        }
-        else
-        {
-            Sprinting = false;
-        }
-
-        if (Sprinting == true)
+        if (Input.GetKey(KeyCode.LeftShift) )//&& isGrounded)
         {
             movementSpeed = runSpeed;
         }
-
-        if (Sprinting == false)
+        else
         {
             movementSpeed = walkSpeed;
         }
@@ -97,6 +90,7 @@ public class CharacterMovement : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * movementSpeed * Time.deltaTime);
+            
         }
 
         //This is the gracity so the character can fall.
@@ -104,5 +98,20 @@ public class CharacterMovement : MonoBehaviour
 
         //This the velocity.
         controller.Move(velocity * Time.deltaTime);
+
+        //This is for the walking.
+        //float speed = horizontal + vertical;
+        if (vertical == 0 && horizontal == 0)
+        {
+            anim.SetFloat("Speed", 0);
+        }
+        else
+        {
+            anim.SetFloat("Speed", movementSpeed);
+        }
+
+        Debug.Log(movementSpeed);
+        //anim.SetFloat("Speed", speed);
+        Debug.Log(velocity.y);
     }
 }
