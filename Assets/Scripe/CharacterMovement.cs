@@ -19,7 +19,7 @@ public class CharacterMovement : MonoBehaviour
 
     public float turnSmoothTime = 0.1f;
     float turnSoothVelocity;
-    
+
     Vector3 velocity;
 
     public bool isGrounded;
@@ -30,10 +30,10 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        
     }
     void Update()
     {
-
         //This help so the game know when that character is on the ground.
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -42,11 +42,15 @@ public class CharacterMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
+        else if (!isGrounded && velocity.y < 0)
+        {
+            anim.CrossFade("Fall_A", 0.5f);
+        }
 
         //Character Movement
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
                
 
         //Character Jump
@@ -54,11 +58,12 @@ public class CharacterMovement : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             anim.SetTrigger("Jump");  //SetTrigger is a one off.
+            //anim.Play("Jump_A");
         }
 
         
         //Turn on and off Sprinting.
-        if (Input.GetKey(KeyCode.LeftShift) )//&& isGrounded)
+        if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
         {
             movementSpeed = runSpeed;
         }
@@ -66,21 +71,6 @@ public class CharacterMovement : MonoBehaviour
         {
             movementSpeed = walkSpeed;
         }
-        
-        /*
-        // Turn on Sprinting.
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
-        {
-            Sprinting = true;
-            //Debug.Log("Run");
-        }
-
-        // Turn off Sprinting.
-        if (Input.GetKeyUp(KeyCode.LeftShift) && isGrounded)
-        {
-            Sprinting = false;
-        }
-        */
 
         if (direction.magnitude >= 0.1f)
         {
@@ -110,8 +100,12 @@ public class CharacterMovement : MonoBehaviour
             anim.SetFloat("Speed", movementSpeed);
         }
 
-        Debug.Log(movementSpeed);
+        //Debug.Log(movementSpeed);
         //anim.SetFloat("Speed", speed);
-        Debug.Log(velocity.y);
+        //Debug.Log(velocity.y);
+    }
+
+    private class CameraStartPoint
+    {
     }
 }
