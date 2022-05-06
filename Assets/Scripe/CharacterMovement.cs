@@ -25,6 +25,9 @@ public class CharacterMovement : MonoBehaviour
     public bool isGrounded;
     // isGround everthing that is on the Ground Layer can work.
 
+
+    public Transform test;
+
     Animator anim;
 
     void Start()
@@ -103,9 +106,5 @@ public class CharacterMovement : MonoBehaviour
         //Debug.Log(movementSpeed);
         //anim.SetFloat("Speed", speed);
         //Debug.Log(velocity.y);
-    }
-
-    private class CameraStartPoint
-    {
     }
 }
