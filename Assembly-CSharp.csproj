@@ -56,9 +56,10 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripe\CharacterMovement.cs" />
-    <Compile Include="Assets\Scripe\MainMenu.cs" />
     <Compile Include="Assets\Scripe\PauseMenu.cs" />
+    <Compile Include="Assets\Scripe\MainMenu.cs" />
+    <Compile Include="Assets\Scripe\FinishMenu.cs" />
+    <Compile Include="Assets\Scripe\CharacterMovement.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
